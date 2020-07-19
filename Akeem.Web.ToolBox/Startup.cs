@@ -28,11 +28,13 @@ namespace Akeem.Web.ToolBox
             services.AddControllersWithViews();
 
             services.Configure<Models.ShortUrlSetting>(Configuration.GetSection("ShortUrlSetting"));
+            services.Configure<Models.SystemSetting>(Configuration.GetSection("SystemSetting"));
             ShortUrlSetting shortUrlSetting = new ShortUrlSetting();
             Configuration.Bind("ShortUrlSetting", shortUrlSetting);
 
             services.AddDbContext<ToolBox.Models.ToolsContext>(options => options.UseMySql(shortUrlSetting.Connection));
             services.AddScoped<UrlServices>();
+            services.AddScoped<ImgServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
