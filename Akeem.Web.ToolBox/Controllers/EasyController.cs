@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Akeem.Web.ToolBox.Controllers
 {
-    [Route("et/[controller]")]
+    [Route("et")]
     [ApiController]
     public class EasyController: ControllerBase
     {
@@ -17,13 +17,13 @@ namespace Akeem.Web.ToolBox.Controllers
         {
             this.imgServices = imgServices;
         }
-        [HttpGet("bgColor/{width}*{height}")]
+        [HttpGet("color/{width}*{height}")]
 
         public IActionResult BgColor1(int width, int height)
         {
             return File(this.imgServices.BackGround(width, height), "image/Png");
         }
-        [HttpGet("bgColor/{size}")]
+        [HttpGet("color/{size}")]
 
         public IActionResult BgColor2(int size)
         {
