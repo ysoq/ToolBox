@@ -1,4 +1,5 @@
 ﻿using Akeem.Web.CommonUtils;
+using Akeem.Web.CommonUtils.Attribute;
 using Akeem.Web.ToolBox.Models;
 using Akeem.Web.ToolBox.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 namespace Akeem.Web.ToolBox.Controllers
 {
     [Route("/")]
+    [ViewErrorHandle]
     public class HomeController : Controller
     {
         private readonly IOptions<ShortUrlSetting> options;
@@ -84,6 +86,7 @@ namespace Akeem.Web.ToolBox.Controllers
         [HttpGet("/404")]
         public IActionResult Error_404()
         {
+            throw new ArgumentNullException();
             return View();
         }
     }

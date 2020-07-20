@@ -123,37 +123,44 @@ namespace Akeem.Web.ToolBox.Services
         {
             Color[] c = { Color.Black, Color.Red, Color.DarkBlue, Color.Green, Color.Orange, Color.Brown, Color.DarkCyan, Color.Purple };
             return this.BackGround(width, height, c[6]);
-            //return this.BackGround(width, height, c[(width + height) % c.Length]);
         }
 
         public byte[] BackGround(int width, int height, Color color)
         {
-            width = width < 1 ? 300 : width;
-            width = width > 1000 ? 1000 : width;
-
-            height = height < 1 ? 300 : height;
-            height = height > 1000 ? 1000 : height;
-            using MemoryStream ms = new MemoryStream();
-            using (Bitmap img = new Bitmap(width, height))
+            try
             {
-                using var g = Graphics.FromImage(img);
-                g.Clear(color);//随机背景
+                width = width < 1 ? 300 : width;
+                width = width > 1000 ? 1000 : width;
 
-                if (options.Value.Watermark)
+                height = height < 1 ? 300 : height;
+                height = height > 1000 ? 1000 : height;
+                using MemoryStream ms = new MemoryStream();
+                using (Bitmap img = new Bitmap(width, height))
                 {
+                    using var g = Graphics.FromImage(img);
+                    g.Clear(color);//随机背景
 
-                    Font f = new Font("Verdana", 7, FontStyle.Bold);//字体  
-                    Brush b = new SolidBrush(Color.White);//颜色  
-                    RectangleF rectangleF = new RectangleF(0, 0, width - 3, height - 3);
-                    StringFormat stringFormat = new StringFormat();
-                    stringFormat.Alignment = StringAlignment.Far;
-                    stringFormat.LineAlignment = StringAlignment.Far;
-                    g.DrawString("akeem.cn", f, b, rectangleF, stringFormat);//绘制一个验证字符  
+                    if (options.Value.Watermark)
+                    {
+
+                        Font f = new Font("Verdana", 7, FontStyle.Bold);//字体  
+                        Brush b = new SolidBrush(Color.White);//颜色  
+                        RectangleF rectangleF = new RectangleF(0, 0, width - 3, height - 3);
+                        StringFormat stringFormat = new StringFormat();
+                        stringFormat.Alignment = StringAlignment.Far;
+                        stringFormat.LineAlignment = StringAlignment.Far;
+                        g.DrawString("akeem.cn", f, b, rectangleF, stringFormat);//绘制一个验证字符  
+                    }
+
+                    img.Save(ms, ImageFormat.Png);//将此图像以Png图像文件的格式保存到流中  
                 }
-
-                img.Save(ms, ImageFormat.Png);//将此图像以Png图像文件的格式保存到流中  
+                return ms.ToArray();
             }
-            return ms.ToArray();
+            catch (Exception ex)
+            {
+                CommonTools.Ex("create color bg", ex);
+                return default;
+            }
         }
     }
 }

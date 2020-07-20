@@ -23,7 +23,7 @@ namespace Akeem.Web.ToolBox
             }
             catch (Exception exception)
             {
-                logger.Error(exception, "Stopped program because of exception");
+                CommonTools.Ex("main run build", exception);
                 throw;
             }
             finally

@@ -1,4 +1,5 @@
-﻿using Akeem.Web.ToolBox.Services;
+﻿using Akeem.Web.CommonUtils.Attribute;
+using Akeem.Web.ToolBox.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -10,17 +11,15 @@ namespace Akeem.Web.ToolBox.Controllers
 {
     [Route("et")]
     [ApiController]
+    [ApiErrorHandle]
     public class EasyController: ControllerBase
     {
         private readonly ImgServices imgServices;
 
-        public EasyController(ImgServices imgServices, ILogger<HomeController> logger)
+        public EasyController(ImgServices imgServices)
         {
             this.imgServices = imgServices;
-            this.Logger = logger;
         }
-
-        public ILogger<HomeController> Logger { get; }
 
         [HttpGet("color/{width}*{height}")]
 
@@ -32,7 +31,7 @@ namespace Akeem.Web.ToolBox.Controllers
             }
             catch (Exception ex)
             {
-                Logger.LogError("BgColor2", ex);
+                CommonTools.Ex("BgColor2", ex);
                 throw ex;
             }
         }
@@ -42,11 +41,12 @@ namespace Akeem.Web.ToolBox.Controllers
         {
             try
             {
+                throw new Exception("");
                 return File(this.imgServices.BackGround(size), "image/png");
             }
             catch (Exception ex)
             {
-                Logger.LogError("BgColor2", ex);
+                CommonTools.Ex("BgColor2", ex);
                 throw ex;
             }
         }
