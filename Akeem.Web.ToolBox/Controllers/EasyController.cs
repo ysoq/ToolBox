@@ -12,7 +12,7 @@ namespace Akeem.Web.ToolBox.Controllers
     [Route("et")]
     [ApiController]
     [ApiErrorHandle]
-    public class EasyController: ControllerBase
+    public class EasyController : ControllerBase
     {
         private readonly ImgServices imgServices;
 
@@ -25,30 +25,13 @@ namespace Akeem.Web.ToolBox.Controllers
 
         public IActionResult BgColor1(int width, int height)
         {
-            try
-            {
-                return File(this.imgServices.BackGround(width, height), "image/png");
-            }
-            catch (Exception ex)
-            {
-                CommonTools.Ex("BgColor2", ex);
-                throw ex;
-            }
+            return File(this.imgServices.BackGround(width, height), "image/png");
         }
         [HttpGet("color/{size}")]
 
         public IActionResult BgColor2(int size)
         {
-            try
-            {
-                throw new Exception("");
-                return File(this.imgServices.BackGround(size), "image/png");
-            }
-            catch (Exception ex)
-            {
-                CommonTools.Ex("BgColor2", ex);
-                throw ex;
-            }
+            return File(this.imgServices.BackGround(size), "image/png");
         }
     }
 }
