@@ -18,4 +18,5 @@ RUN dotnet publish "Akeem.Web.ToolBox.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+RUN apt-get update -y && apt-get install -y libgdiplus && apt-get clean && ln -s /usr/lib/libgdiplus.so /usr/lib/gdiplus.dll
 ENTRYPOINT ["dotnet", "Akeem.Web.ToolBox.dll"]

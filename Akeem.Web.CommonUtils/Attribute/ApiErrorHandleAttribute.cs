@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,9 +18,9 @@ namespace Akeem.Web.CommonUtils.Attribute
             var exception = filterContext.Exception;
             var controllerName = filterContext.RouteData.Values["controller"].ToString();
             var actionName = filterContext.RouteData.Values["action"].ToString();
-            var msg = $"出错位置:{controllerName}/{actionName}----出错时间:{DateTime.Now:yyyy-MM-dd HH:mm:ss:fff}";
+            var msg = $"出错位置:{controllerName}/{actionName}";
             CommonTools.Ex(msg, exception);
-            filterContext.Result = new BadRequestResult();
+            filterContext.Result = new JsonResult(new { result = "fail" });
             base.OnException(filterContext);
         }
     }

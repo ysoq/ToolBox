@@ -31,7 +31,14 @@ namespace Akeem.Web.ToolBox.Controllers
 
         public IActionResult BgColor2(int size)
         {
+            CommonTools.Log("BgColor2");
             return File(this.imgServices.BackGround(size), "image/png");
+        }
+        [HttpGet("ex")]
+        public IActionResult Ex()
+        {
+            int a = int.Parse("add");
+            return Ok();
         }
     }
 }
