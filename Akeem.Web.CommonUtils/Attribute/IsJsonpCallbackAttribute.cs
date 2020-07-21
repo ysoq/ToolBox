@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Linq;
 
@@ -12,12 +13,15 @@ namespace Akeem.Web.CommonUtils
             string text = context.HttpContext.Request.QueryString.Value;
             string[] arrys = text.Split('&');
             string callbackQuery = arrys.FirstOrDefault(item => item.ToLower().Contains(CallbackQueryParameter));
-            
+
             if (!string.IsNullOrEmpty(callbackQuery))
             {
                 string myCallBackValue = callbackQuery.Split('=')[1];
                 string result = $"{myCallBackValue}({((Microsoft.AspNetCore.Mvc.JsonResult)context.Result).Value.Obj2Str()})";
-                context.HttpContext.Response.WriteAsync(result);
+                context.Result = new ContentResult
+                {
+                    Content = result
+                };
             }
 
             base.OnActionExecuted(context);
